@@ -1,11 +1,34 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
   <router-view/>
-</template>
+  {{ doubleCounter }}
 
+  <button @click="handleClick">handleClick</button>
+
+</template>
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
+import { useStore } from '@/store'
+import { AppMutationTypes } from '@/store/mutation-types'
+
+export default defineComponent({
+  name: 'Home',
+  setup () {
+    const store = useStore()
+    function handleClick () {
+      store.commit(AppMutationTypes.SET_COUNTER, 1)
+    }
+
+    const doubleCounter = computed(() => {
+      return store.getters.doubledCounter
+    })
+
+    return {
+      doubleCounter,
+      handleClick
+    }
+  }
+})
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
