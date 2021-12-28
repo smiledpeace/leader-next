@@ -1,19 +1,15 @@
-import { State } from '@/store/app/state'
-import { AppMutationTypes } from '@/store/app/mutation-types'
 import { MutationTree } from 'vuex'
+import { RootMutationsTypes, IRootState, IUserData } from '@/store/app/interfaces'
+import { ROOT_STORE } from '@/store/app/constants'
 
-export type Mutations<S = State > = {
-  [AppMutationTypes.SET_COUNTER](state: S, payload: number): void
-  // [AppMutationTypes.REST_COUNTER](state: S): void
-}
-
-const appMutations: MutationTree<State> & Mutations = {
-  [AppMutationTypes.SET_COUNTER] (state, payload: number) {
-    state.counter = payload
+export const mutations: MutationTree<IRootState> & RootMutationsTypes = {
+  [ROOT_STORE.MUTATIONS.UPDATE_VERSION] (state: IRootState, payload: string) {
+    state.version = payload
   },
-  [AppMutationTypes.REST_COUNTER] (state) {
-    state.counter = 0
+  [ROOT_STORE.MUTATIONS.USER_LISTS] (state, payload: IUserData[]) {
+    state.userlists = payload
+  },
+  [ROOT_STORE.MUTATIONS.IS_MOBILE_DEVICE] (state, payload: boolean) {
+    state.isMobile = payload
   }
 }
-
-export default appMutations

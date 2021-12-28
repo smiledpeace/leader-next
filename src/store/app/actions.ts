@@ -1,33 +1,20 @@
-import { ActionTree, ActionContext } from 'vuex'
-import { State } from '@/store/app/state'
-import { AppActionTypes } from '@/store/app/action-types'
-import { Mutations } from '@/store/app/mutations'
-import { AppMutationTypes } from '@/store/app/mutation-types'
+import { ActionTree } from 'vuex'
+import { RootActionsTypes, IRootState, IUserData } from '@/store/app/interfaces'
+import { ROOT_STORE } from '@/store/app/constants'
+import { COUNTER_STORE } from '@/store/counter/constants'
 
-type AugmentedActionContext = {
-  commit<K extends keyof Mutations>(
-    key: K,
-    payload: Parameters<Mutations[K]>[1]
-  ): ReturnType<Mutations[K]>
-} & Omit<ActionContext<State, State>, 'commit'>
-
-export interface Actions {
-  [AppActionTypes.GET_COUNTER](
-    { commit }: AugmentedActionContext,
-    payload: number
-  ): Promise<number>
-}
-
-const appActions: ActionTree<State, State> & Actions = {
-  [AppActionTypes.GET_COUNTER] ({ commit }) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const data = 256
-        commit(AppMutationTypes.SET_COUNTER, data)
-        resolve(data)
-      }, 500)
-    })
+export const actions: ActionTree<IRootState, IRootState> & RootActionsTypes = {
+  [ROOT_STORE.ACTIONS.UPDATE_VERSION] ({ commit }, payload: string) {
+    commit(ROOT_STORE.MUTATIONS.UPDATE_VERSION, payload)
+  },
+  [ROOT_STORE.ACTIONS.COUNTER_CHECK] ({ dispatch }, payload: boolean) {
+    dispatch(COUNTER_STORE.ACTIONS.SET_ROOT_DISPATCH, payload)
+    console.log(payload)
+  },
+  [ROOT_STORE.ACTIONS.USER_LISTS] (context, payload: IUserData[]) {
+    context.commit(ROOT_STORE.MUTATIONS.USER_LISTS, payload)
+  },
+  [ROOT_STORE.ACTIONS.IS_MOBILE_DEVICE]: (context, payload: boolean): void => {
+    context.commit(ROOT_STORE.MUTATIONS.IS_MOBILE_DEVICE, payload)
   }
 }
-
-export default appActions
