@@ -1,0 +1,1 @@
+import { DispatchOptions } from 'vuex'

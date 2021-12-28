@@ -9,6 +9,7 @@ module.exports = {
     '@vue/typescript/recommended'
   ],
   parserOptions: {
+    parser: "@typescript-eslint/parser", // webstorm 2.0 不加不生效
     ecmaVersion: 2020
   },
   rules: {

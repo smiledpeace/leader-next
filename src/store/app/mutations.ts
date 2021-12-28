@@ -1,5 +1,5 @@
-import { State } from '@/store/state'
-import { AppMutationTypes } from '@/store/mutation-types'
+import { State } from '@/store/app/state'
+import { AppMutationTypes } from '@/store/app/mutation-types'
 import { MutationTree } from 'vuex'
 
 export type Mutations<S = State > = {

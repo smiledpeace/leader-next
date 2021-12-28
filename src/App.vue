@@ -1,6 +1,7 @@
 <template>
   <router-view/>
   {{ doubleCounter }}
+  {{ core }}
 
   <button @click="handleClick">handleClick</button>
 
@@ -8,7 +9,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { useStore } from '@/store'
-import { AppMutationTypes } from '@/store/mutation-types'
+import { AppMutationTypes } from '@/store/app/mutation-types'
+import { UserActionTypes } from '@/store/user/action-types'
 
 export default defineComponent({
   name: 'Home',
@@ -16,15 +18,20 @@ export default defineComponent({
     const store = useStore()
     function handleClick () {
       store.commit(AppMutationTypes.SET_COUNTER, 1)
+      store.dispatch(UserActionTypes.GET_USER_CORE, 1)
     }
 
     const doubleCounter = computed(() => {
       return store.getters.doubledCounter
     })
+    const core = computed(() => {
+      return store.getters.core
+    })
 
     return {
       doubleCounter,
-      handleClick
+      handleClick,
+      core
     }
   }
 })

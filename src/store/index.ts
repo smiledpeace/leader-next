@@ -5,11 +5,16 @@ import {
   DispatchOptions
 } from 'vuex'
 
-import state, { State } from '@/store/state'
-
-import appMutations, { Mutations } from '@/store/mutations'
-import appActions, { Actions } from '@/store/actions'
+import state, { State } from '@/store/app/state'
+import appMutations, { Mutations } from '@/store/app/mutations'
+import appActions, { Actions } from '@/store/app/actions'
 import appGetters, { Getters } from '@/store/getters'
+import user from '@/store/user/user'
+import { UserState } from '@/store/user/state'
+
+export type RootState = State & {
+  user: UserState
+}
 
 const store = createStore({
   state,
@@ -17,11 +22,12 @@ const store = createStore({
   actions: appActions,
   getters: appGetters,
   modules: {
+    user
   }
 })
 
-export type Store = Omit<
-  VuexStore<State>,
+export type AppStore<S = State> = Omit<
+  VuexStore<S>,
   'getters' | 'commit' | 'dispatch'
   > & {
   commit<K extends keyof Mutations, P extends Parameters<Mutations[K]>[1]>(
@@ -41,7 +47,9 @@ export type Store = Omit<
   }
 }
 
-export function useStore () {
+export type Store = AppStore & UserState
+
+export function useStore (): Store {
   return store as Store
 }
 
