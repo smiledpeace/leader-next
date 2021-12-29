@@ -14,6 +14,9 @@
       <label style="font-weight: bold;"
         >isRootDispatchSet: {{ isRootDispatchSet }}</label
       >
+      <label style="font-weight: bold;"
+        >userList: {{ userList }}</label
+      >
       <button class="btn" @click="getCounter">
         Increment Counter
       </button>
@@ -26,6 +29,9 @@
       </button>
       <button class="btn" @click="crossCounterDispatch">
         Cross Counter Dispatch
+      </button>
+      <button class="btn" @click="getUserList">
+        getUserList
       </button>
     </div>
   </div>
@@ -56,6 +62,10 @@ export default defineComponent({
       () => store.getters[COUNTER_STORE.GETTERS.GET_ROOT_DISPATCH]
     )
 
+    const userList = computed(() => {
+      return store.getters[ROOT_STORE.GETTERS.USER_LISTS]
+    })
+
     function resetCounter () {
       store.commit(COUNTER_STORE.MUTATIONS.RESET_COUNTER)
     }
@@ -73,6 +83,9 @@ export default defineComponent({
     function crossCounterDispatch () {
       // store.dispatch(COUNTER1_STORE.ACTIONS.CALL_COUNTER1)
     }
+    async function getUserList () {
+      await store.dispatch(ROOT_STORE.ACTIONS.USER_LISTS, [{ id: 1, userId: 1, title: '1', body: '1' }])
+    }
 
     return {
       counter,
@@ -82,7 +95,9 @@ export default defineComponent({
       setRootDispatch,
       isRootDispatchSet,
       crossCounterDispatch,
-      counterTemp
+      counterTemp,
+      userList,
+      getUserList
     }
   }
 })
