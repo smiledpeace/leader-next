@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import HelloWorld from '@/components/HelloWorld.vue' // @ is an alias to /src
-import { useCountDown } from '@/utils/useCountDown'
+import { useCountDown } from '@/use/useCountDown'
 import { formatDate } from '@/utils/date'
 
 export default defineComponent({
