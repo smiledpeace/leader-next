@@ -1,5 +1,5 @@
-export type FormatDate = Date | string | number
-export type Config = {
+type FormatDate = Date | string | number
+type Config = {
   [key: string]: string | number
 }
 
